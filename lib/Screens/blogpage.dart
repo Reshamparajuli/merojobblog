@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../Models/Apimodel/apimodel.dart';
+import '../Models/Apimodel/jobnewsapi.dart';
 import '../Reusable Widgets/Texts.dart';
 
 class BlogPage extends StatefulWidget {
@@ -15,7 +16,7 @@ class BlogPage extends StatefulWidget {
 }
 
 class _BlogPageState extends State<BlogPage> {
-  String dropdownvalue = 'Item 1';
+  String dropdownvalue = '';
 
   var categoryitems = [
     'Training and Education',
@@ -30,6 +31,7 @@ class _BlogPageState extends State<BlogPage> {
     final response =
         await http.get(Uri.parse('http://192.168.99.20/api/v1/blog/posts/'));
     var data = jsonDecode(response.body);
+    print(data.runtimeType);
 
     if (response.statusCode == 200) {
       for (Map<String, dynamic> i in data) {
@@ -40,6 +42,25 @@ class _BlogPageState extends State<BlogPage> {
       throw Exception("failed to load data");
     }
   }
+
+  Future<List<MerojobModel>> fetchJob({required String jobCategorySlug}) async {
+    final response = await http.get(Uri.parse(
+        'http://192.168.99.20/api/v1/blog/categories/$jobCategorySlug/posts/'));
+    var data = jsonDecode(response.body);
+    List<MerojobModel> merojobModel = [];
+
+    if (response.statusCode == 200) {
+      for (Map<String, dynamic> i in data["results"]) {
+        merojobModel.add(MerojobModel.fromJson(i));
+        print(merojobModel.length);
+      }
+      return merojobModel;
+    } else {
+      throw Exception("failed to load data");
+    }
+  }
+
+  //for job
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +80,7 @@ class _BlogPageState extends State<BlogPage> {
           Padding(
             padding: const EdgeInsets.only(top: 1, bottom: 5),
             child: Container(
+              height: 50,
               decoration: const BoxDecoration(
                 color: Colors.white,
               ),
@@ -76,11 +98,29 @@ class _BlogPageState extends State<BlogPage> {
                         height: 40,
                         child: DropdownButtonFormField(
                           hint: const Text("Category"),
-                          onChanged: (value) {
-                            setState(() {});
+                          onChanged: (value) async {
+                            if (value == "Job News") {
+                              merojobModel =
+                                  await fetchJob(jobCategorySlug: "job-news");
+                            } else if (value == "Training and Education") {
+                              merojobModel = await fetchJob(
+                                  jobCategorySlug: "training-and-education");
+                            } else if (value == "HR Insider") {
+                              merojobModel =
+                                  await fetchJob(jobCategorySlug: "hr-insider");
+                            } else if (value == "Career Development") {
+                              merojobModel = await fetchJob(
+                                  jobCategorySlug: "career-development");
+                            } else {
+                              return;
+                            }
+
+                            setState(() {
+                              dropdownvalue = value.toString();
+                            });
                           },
                           decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.all(10),
+                            contentPadding: const EdgeInsets.all(5),
                             enabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
                                   color: Colors.grey, width: 1),
@@ -114,7 +154,7 @@ class _BlogPageState extends State<BlogPage> {
                           hint: const Text("Sort By"),
                           onChanged: null,
                           decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.all(10),
+                            contentPadding: const EdgeInsets.all(5),
                             enabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
                                   color: Colors.grey, width: 1),
@@ -161,13 +201,18 @@ class _BlogPageState extends State<BlogPage> {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Image.network(
-                                merojobModel[index].headerImg.toString(),
+                                merojobModel[index]
+                                        .headerImg
+                                        .contains("http://192.168.99.20")
+                                    ? merojobModel[index].headerImg
+                                    : "http://192.168.99.20" +
+                                        merojobModel[index].headerImg,
                                 fit: BoxFit.cover,
                               ),
                             ),
                           ),
                           Texts(
-                            heading: merojobModel[index].title,
+                            heading: merojobModel[index].category.toString(),
                             title: merojobModel[index].excerpt,
                             date: merojobModel[index].createdAt.toString(),
                             views: merojobModel[index].count.toString(),

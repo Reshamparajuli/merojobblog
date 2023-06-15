@@ -2,12 +2,6 @@
 //
 //     final jobModel = jobModelFromJson(jsonString);
 
-import 'dart:convert';
-
-JobModel jobModelFromJson(String str) => JobModel.fromJson(json.decode(str));
-
-String jobModelToJson(JobModel data) => json.encode(data.toJson());
-
 class JobModel {
   List<Result> results;
 
@@ -19,10 +13,6 @@ class JobModel {
         results:
             List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
       );
-
-  Map<String, dynamic> toJson() => {
-        "results": List<dynamic>.from(results.map((x) => x.toJson())),
-      };
 }
 
 class Result {
@@ -53,16 +43,6 @@ class Result {
         count: json["count"],
         createdAt: DateTime.parse(json["created_at"]),
       );
-
-  Map<String, dynamic> toJson() => {
-        "title": title,
-        "excerpt": excerpt,
-        "header_img": headerImg,
-        "category": categoryValues.reverse[category],
-        "slug": slug,
-        "count": count,
-        "created_at": createdAt.toIso8601String(),
-      };
 }
 
 enum Category { JOB_NEWS }
