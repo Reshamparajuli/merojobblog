@@ -205,8 +205,7 @@ class _BlogPageState extends State<BlogPage> {
                                         .headerImg
                                         .contains("http://192.168.99.20")
                                     ? merojobModel[index].headerImg
-                                    : "http://192.168.99.20" +
-                                        merojobModel[index].headerImg,
+                                    : "http://192.168.99.20${merojobModel[index].headerImg}",
                                 fit: BoxFit.cover,
                               ),
                             ),
