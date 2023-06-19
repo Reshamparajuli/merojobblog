@@ -25,9 +25,9 @@ class _BlogPageState extends State<BlogPage> {
     'HR Insider',
     'Career Development',
   ];
-  List<MerojobModel> merojobModel = [];
 
   Future<List<MerojobModel>> fetchMeroJob() async {
+    List<MerojobModel> merojobModel = [];
     final response =
         await http.get(Uri.parse('http://192.168.99.20/api/v1/blog/posts/'));
     var data = jsonDecode(response.body);
@@ -64,6 +64,7 @@ class _BlogPageState extends State<BlogPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<MerojobModel> merojobModel = [];
     return Scaffold(
       backgroundColor: const Color.fromRGBO(245, 245, 247, 1),
       appBar: AppBar(
