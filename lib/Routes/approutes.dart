@@ -1,4 +1,4 @@
-import '../Screens/blogpage.dart';
+import 'package:apiapp/Screens/blogpage.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -19,7 +19,7 @@ class MyApproute {
         pageBuilder: (context, state) {
           return MaterialPage(
               child: BlogDetails(
-                  slug: MerojobModel.fromJson(state.pathParameters).slug));
+                  slug: state.pathParameters['slug']!));
         },
       ),
     ],

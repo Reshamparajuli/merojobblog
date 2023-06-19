@@ -211,6 +211,7 @@ class _BlogPageState extends State<BlogPage> {
                             ),
                           ),
                           Texts(
+                            slug: merojobModel[index].slug.toString(),
                             heading: merojobModel[index].category.toString(),
                             title: merojobModel[index].excerpt,
                             date: merojobModel[index].createdAt.toString(),

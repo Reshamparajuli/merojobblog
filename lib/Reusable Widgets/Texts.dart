@@ -6,6 +6,7 @@ class Texts extends StatelessWidget {
   final String title;
   final String date;
   final String views;
+  final String slug;
 
   const Texts({
     super.key,
@@ -13,6 +14,7 @@ class Texts extends StatelessWidget {
     required this.title,
     required this.date,
     required this.views,
+    required this.slug,
   });
 
   @override
@@ -21,7 +23,7 @@ class Texts extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
       child: GestureDetector(
         onTap: () {
-          GoRouter.of(context).pushNamed("/BlogDetails/$title");
+          context.push("/BlogDetails/$slug");
         },
         child: Container(
           decoration: BoxDecoration(
