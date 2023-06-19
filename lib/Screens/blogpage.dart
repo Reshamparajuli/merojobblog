@@ -1,11 +1,10 @@
+import 'package:apiapp/API/api_conection.dart';
+import 'package:apiapp/Provider/Apiprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_remix/flutter_remix.dart';
-import 'dart:convert';
 
-import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
-import '../Models/Apimodel/apimodel.dart';
-import '../Models/Apimodel/jobnewsapi.dart';
 import '../Reusable Widgets/Texts.dart';
 
 class BlogPage extends StatefulWidget {
@@ -16,55 +15,14 @@ class BlogPage extends StatefulWidget {
 }
 
 class _BlogPageState extends State<BlogPage> {
-  String dropdownvalue = '';
-
-  var categoryitems = [
-    'Training and Education',
-    'Job Preparation',
-    'Job News',
-    'HR Insider',
-    'Career Development',
-  ];
-
-  Future<List<MerojobModel>> fetchMeroJob() async {
-    List<MerojobModel> merojobModel = [];
-    final response =
-        await http.get(Uri.parse('http://192.168.99.20/api/v1/blog/posts/'));
-    var data = jsonDecode(response.body);
-    print(data.runtimeType);
-
-    if (response.statusCode == 200) {
-      for (Map<String, dynamic> i in data) {
-        merojobModel.add(MerojobModel.fromJson(i));
-      }
-      return merojobModel;
-    } else {
-      throw Exception("failed to load data");
-    }
-  }
-
-  Future<List<MerojobModel>> fetchJob({required String jobCategorySlug}) async {
-    final response = await http.get(Uri.parse(
-        'http://192.168.99.20/api/v1/blog/categories/$jobCategorySlug/posts/'));
-    var data = jsonDecode(response.body);
-    List<MerojobModel> merojobModel = [];
-
-    if (response.statusCode == 200) {
-      for (Map<String, dynamic> i in data["results"]) {
-        merojobModel.add(MerojobModel.fromJson(i));
-        print(merojobModel.length);
-      }
-      return merojobModel;
-    } else {
-      throw Exception("failed to load data");
-    }
-  }
+  API api = API();
+  ApiProvider ap = ApiProvider();
 
   //for job
 
   @override
   Widget build(BuildContext context) {
-    List<MerojobModel> merojobModel = [];
+    String dropdownvalue = context.watch<ApiProvider>().getdropdownvalue;
     return Scaffold(
       backgroundColor: const Color.fromRGBO(245, 245, 247, 1),
       appBar: AppBar(
@@ -98,28 +56,25 @@ class _BlogPageState extends State<BlogPage> {
                       width: MediaQuery.of(context).size.width * 0.42,
                       height: 40,
                       child: DropdownButtonFormField(
+                        value: dropdownvalue,
                         isExpanded: true,
                         hint: const Text("Category"),
                         onChanged: (value) async {
                           if (value == "Job News") {
-                            merojobModel =
-                                await fetchJob(jobCategorySlug: "job-news");
+                            api.merojobModel =
+                                await api.fetchJob(jobCategorySlug: "job-news");
                           } else if (value == "Training and Education") {
-                            merojobModel = await fetchJob(
+                            api.merojobModel = await api.fetchJob(
                                 jobCategorySlug: "training-and-education");
                           } else if (value == "HR Insider") {
-                            merojobModel =
-                                await fetchJob(jobCategorySlug: "hr-insider");
+                            api.merojobModel = await api.fetchJob(
+                                jobCategorySlug: "hr-insider");
                           } else if (value == "Career Development") {
-                            merojobModel = await fetchJob(
+                            api.merojobModel = await api.fetchJob(
                                 jobCategorySlug: "career-development");
                           } else {
                             return;
                           }
-
-                          setState(() {
-                            dropdownvalue = value.toString();
-                          });
                         },
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.all(5),
@@ -137,7 +92,7 @@ class _BlogPageState extends State<BlogPage> {
                           fillColor: Colors.white,
                         ),
                         dropdownColor: Colors.white,
-                        items: categoryitems.map((String items) {
+                        items: ap.categoryitems.map((String items) {
                           return DropdownMenuItem(
                             value: items,
                             child: Text(items),
@@ -171,7 +126,7 @@ class _BlogPageState extends State<BlogPage> {
                           fillColor: Colors.white,
                         ),
                         dropdownColor: Colors.white,
-                        items: categoryitems.map((String items) {
+                        items: ap.categoryitems.map((String items) {
                           return DropdownMenuItem(
                             value: items,
                             child: Text(items),
@@ -185,12 +140,12 @@ class _BlogPageState extends State<BlogPage> {
             ),
           ),
           FutureBuilder(
-            future: fetchMeroJob(),
+            future: api.fetchMeroJob(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Expanded(
                   child: ListView.builder(
-                    itemCount: merojobModel.length,
+                    itemCount: api.merojobModel.length,
                     itemBuilder: ((context, index) {
                       return Column(
                         children: [
@@ -202,21 +157,21 @@ class _BlogPageState extends State<BlogPage> {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Image.network(
-                                merojobModel[index]
-                                        .headerImg
+                                api.merojobModel[index].headerImg
                                         .contains("http://192.168.99.20")
-                                    ? merojobModel[index].headerImg
-                                    : "http://192.168.99.20${merojobModel[index].headerImg}",
+                                    ? api.merojobModel[index].headerImg
+                                    : "http://192.168.99.20${api.merojobModel[index].headerImg}",
                                 fit: BoxFit.cover,
                               ),
                             ),
                           ),
                           Texts(
-                            slug: merojobModel[index].slug.toString(),
-                            heading: merojobModel[index].category.toString(),
-                            title: merojobModel[index].excerpt,
-                            date: merojobModel[index].createdAt.toString(),
-                            views: merojobModel[index].count.toString(),
+                            slug: api.merojobModel[index].slug.toString(),
+                            heading:
+                                api.merojobModel[index].category.toString(),
+                            title: api.merojobModel[index].excerpt,
+                            date: api.merojobModel[index].createdAt.toString(),
+                            views: api.merojobModel[index].count.toString(),
                           ),
                           const SizedBox(
                             height: 16,

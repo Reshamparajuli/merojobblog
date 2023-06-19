@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:go_router/go_router.dart';
-import 'package:installed_apps/app_info.dart';
+
 import '../api/api_conection.dart';
 import '../models/api_response_model.dart';
-import '../pages/share.dart';
+
 import 'package:remixicon/remixicon.dart';
 import 'package:intl/intl.dart';
 import '../widgets/custom_iconbutton.dart';
-import 'package:installed_apps/installed_apps.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
