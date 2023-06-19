@@ -1,11 +1,10 @@
-
- import 'package:meroblog/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meroblog/pages/home.dart';
 import 'package:meroblog/pages/nextpage.dart';
 
-
 void main() => runApp(const MyApp());
+
 final GoRouter _router = GoRouter(
   routes: <RouteBase>[
     GoRoute(
@@ -15,9 +14,11 @@ final GoRouter _router = GoRouter(
       },
       routes: <RouteBase>[
         GoRoute(
-          path: 'details',
+          path: 'details/:id',
           builder: (BuildContext context, GoRouterState state) {
-            return const DetailsScreen();
+            return  DetailsScreen(
+              id:state.pathParameters['id']!
+            );
           },
         ),
       ],
@@ -32,14 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: _router,
-       title: 'Blog Page 2',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
-        useMaterial3: true,
-      ),
-
+      // routerDelegate: ,
     );
   }
 }
-

@@ -37,6 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final thm = Theme.of(context);
     return Scaffold(
         appBar: AppBar(
             title: const Text(
@@ -143,7 +144,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   MyIconButton(
                                       position: 'top',
                                       onPressed: () {
-                                        context.go('/details');
+                                        context.go('/details/1');
                                         // showModalBottomSheet<void>(
                                         //   context: context,
                                         //   builder: (BuildContext context) {
@@ -188,11 +189,14 @@ class _MyHomePageState extends State<MyHomePage> {
                               Text(
                                 "\"${snapshot.data!.excerpt}\"",
                                 textAlign: TextAlign.justify,
-                                style: const TextStyle(
-                                    fontFamily: 'Noto Sans SemiBold',
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black),
+                                // style: const TextStyle(
+                                //   fontFamily: 'Noto Sans SemiBold',
+                                //   fontSize: 16.0,
+                                //   fontWeight: FontWeight.w600,
+                                //   color: Colors.black,
+                                // ),
+                                style: thm.textTheme.bodyLarge!
+                                    .copyWith(color: thm.primaryColor),
                               ),
                               Padding(
                                 padding:
