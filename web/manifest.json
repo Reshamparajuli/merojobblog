@@ -1,6 +1,6 @@
 {
-    "name": "meroblog",
-    "short_name": "meroblog",
+    "name": "apiapp",
+    "short_name": "apiapp",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

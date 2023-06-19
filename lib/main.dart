@@ -1,30 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:meroblog/pages/home.dart';
-import 'package:meroblog/pages/nextpage.dart';
 
-void main() => runApp(const MyApp());
+import 'Routes/approutes.dart';
 
-final GoRouter _router = GoRouter(
-  routes: <RouteBase>[
-    GoRoute(
-      path: '/',
-      builder: (BuildContext context, GoRouterState state) {
-        return const MyHomePage();
-      },
-      routes: <RouteBase>[
-        GoRoute(
-          path: 'details/:id',
-          builder: (BuildContext context, GoRouterState state) {
-            return  DetailsScreen(
-              id:state.pathParameters['id']!
-            );
-          },
-        ),
-      ],
-    ),
-  ],
-);
+void main() {
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -32,8 +12,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routerConfig: _router,
-      // routerDelegate: ,
+      routerConfig:MyApproute().router ,
+      // routeInformationParser: MyApproute().router.routeInformationParser,
+      // routerDelegate: MyApproute().router.routerDelegate,
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
     );
   }
 }
