@@ -539,7 +539,8 @@ class _BlogDetailsState extends State<BlogDetails> {
                     ),
                   );
                 } else if (snapshot.hasError) {
-                  return Text('error');
+                  // print(snapshot.error);
+                  return Text('$slug');
                 }
               }
               return Text('abcd');

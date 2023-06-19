@@ -91,91 +91,91 @@ class _BlogPageState extends State<BlogPage> {
                   children: [
                     const Icon(FlutterRemix.equalizer_fill),
                     const SizedBox(
-                      width: 40,
+                      width: 5,
                     ),
-                    Expanded(
-                      child: SizedBox(
-                        height: 40,
-                        child: DropdownButtonFormField(
-                          hint: const Text("Category"),
-                          onChanged: (value) async {
-                            if (value == "Job News") {
-                              merojobModel =
-                                  await fetchJob(jobCategorySlug: "job-news");
-                            } else if (value == "Training and Education") {
-                              merojobModel = await fetchJob(
-                                  jobCategorySlug: "training-and-education");
-                            } else if (value == "HR Insider") {
-                              merojobModel =
-                                  await fetchJob(jobCategorySlug: "hr-insider");
-                            } else if (value == "Career Development") {
-                              merojobModel = await fetchJob(
-                                  jobCategorySlug: "career-development");
-                            } else {
-                              return;
-                            }
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.42,
+                      height: 40,
+                      child: DropdownButtonFormField(
+                        isExpanded: true,
+                        hint: const Text("Category"),
+                        onChanged: (value) async {
+                          if (value == "Job News") {
+                            merojobModel =
+                                await fetchJob(jobCategorySlug: "job-news");
+                          } else if (value == "Training and Education") {
+                            merojobModel = await fetchJob(
+                                jobCategorySlug: "training-and-education");
+                          } else if (value == "HR Insider") {
+                            merojobModel =
+                                await fetchJob(jobCategorySlug: "hr-insider");
+                          } else if (value == "Career Development") {
+                            merojobModel = await fetchJob(
+                                jobCategorySlug: "career-development");
+                          } else {
+                            return;
+                          }
 
-                            setState(() {
-                              dropdownvalue = value.toString();
-                            });
-                          },
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.all(5),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Colors.grey, width: 1),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            border: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Colors.grey, width: 2),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            filled: true,
-                            fillColor: Colors.white,
+                          setState(() {
+                            dropdownvalue = value.toString();
+                          });
+                        },
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.all(5),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: Colors.grey, width: 1),
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                          dropdownColor: Colors.white,
-                          items: categoryitems.map((String items) {
-                            return DropdownMenuItem(
-                              value: items,
-                              child: Text(items),
-                            );
-                          }).toList(),
+                          border: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: Colors.grey, width: 2),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          filled: true,
+                          fillColor: Colors.white,
                         ),
+                        dropdownColor: Colors.white,
+                        items: categoryitems.map((String items) {
+                          return DropdownMenuItem(
+                            value: items,
+                            child: Text(items),
+                          );
+                        }).toList(),
                       ),
                     ),
                     const SizedBox(
-                      width: 15,
+                      width: 5,
                     ),
-                    Expanded(
-                      child: SizedBox(
-                        height: 40,
-                        child: DropdownButtonFormField(
-                          hint: const Text("Sort By"),
-                          onChanged: null,
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.all(5),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Colors.grey, width: 1),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            border: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Colors.grey, width: 2),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            filled: true,
-                            fillColor: Colors.white,
+                    SizedBox(
+                      height: 40,
+                      width: MediaQuery.of(context).size.width * 0.42,
+                      child: DropdownButtonFormField(
+                        isExpanded: true,
+                        hint: const Text("Sort By"),
+                        onChanged: null,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.all(5),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: Colors.grey, width: 1),
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                          dropdownColor: Colors.white,
-                          items: categoryitems.map((String items) {
-                            return DropdownMenuItem(
-                              value: items,
-                              child: Text(items),
-                            );
-                          }).toList(),
+                          border: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: Colors.grey, width: 2),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          filled: true,
+                          fillColor: Colors.white,
                         ),
+                        dropdownColor: Colors.white,
+                        items: categoryitems.map((String items) {
+                          return DropdownMenuItem(
+                            value: items,
+                            child: Text(items),
+                          );
+                        }).toList(),
                       ),
                     ),
                   ],
