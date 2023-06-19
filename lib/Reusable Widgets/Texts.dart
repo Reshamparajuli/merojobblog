@@ -23,7 +23,7 @@ class Texts extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
       child: GestureDetector(
         onTap: () {
-          GoRouter.of(context).pushNamed("/BlogDetails/$slug");
+          context.push("/BlogDetails/$slug");
         },
         child: Container(
           decoration: BoxDecoration(

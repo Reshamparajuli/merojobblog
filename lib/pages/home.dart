@@ -12,17 +12,18 @@ import 'package:installed_apps/installed_apps.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
-class BlogDetails extends StatefulWidget {
-  final String slug;
-  const BlogDetails({super.key, required this.slug});
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({
+    super.key,
+  });
 
   @override
-  State<BlogDetails> createState() => _BlogDetailsState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _BlogDetailsState extends State<BlogDetails> {
+class _MyHomePageState extends State<MyHomePage> {
   API api = API();
-
+  String slug = "daraz-recruiting-for-17-different-positions";
   Future<void> _launchInWebViewOrVC(Uri url) async {
     if (!await launchUrl(
       url,
@@ -36,7 +37,6 @@ class _BlogDetailsState extends State<BlogDetails> {
 
   @override
   Widget build(BuildContext context) {
-    String slug = widget.slug;
     final thm = Theme.of(context);
     return Scaffold(
         appBar: AppBar(
@@ -48,11 +48,7 @@ class _BlogDetailsState extends State<BlogDetails> {
                   fontWeight: FontWeight.w600,
                   color: Colors.black),
             ),
-            leading: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Icon(Remix.arrow_left_s_line)),
+            leading: const Icon(Remix.arrow_left_s_line),
             backgroundColor: Colors.white,
             scrolledUnderElevation: 0.0),
         body: FutureBuilder(

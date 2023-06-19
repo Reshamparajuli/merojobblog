@@ -19,7 +19,7 @@ class MyApproute {
         pageBuilder: (context, state) {
           return MaterialPage(
               child: BlogDetails(
-                  slug: MerojobModel.fromJson(state.pathParameters).slug));
+                  slug: state.pathParameters['slug']!));
         },
       ),
     ],
