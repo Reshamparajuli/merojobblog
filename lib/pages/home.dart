@@ -535,7 +535,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   );
                 } else if (snapshot.hasError) {
-                  return Text('error');
+                  return Text('lsflksnfkjsnfnnjk$slug');
                 }
               }
               return Text('abcd');

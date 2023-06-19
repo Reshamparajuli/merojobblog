@@ -1,9 +1,9 @@
 
 class APIResponseModel {
-    int id;
+    int? id;
     String category;
     List<String> tags;
-    int count;
+    int? count;
     String slug;
     dynamic scheduledFor;
     DateTime createdAt;
@@ -13,7 +13,7 @@ class APIResponseModel {
     String headerImg;
     String excerpt;
     String status;
-    int metaTag;
+    int? metaTag;
 
     APIResponseModel({
         required this.id,
